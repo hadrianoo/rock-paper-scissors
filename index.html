@@ -23,19 +23,53 @@
         }
 
         function getHumanChoice() {
-            return prompt('rock, paper or scissors?').toLowerCase()
+            return prompt('rock, paper or scissors?').toLowerCase();
 
         }
 
-        // function playRound(humanChoice, computerChoice) {
-        //     // your code here!
-        // }
+        function playRound(humanChoice, computerChoice) {
+            if (computerChoice == 'rock') {
+                if (humanChoice == 'paper') {
+                    humanScore += 1;
+                    console.log("human " + humanScore + "computer " + computerScore)
+                    console.log("You Won! Paper beats Rock");
+                }
+                if (humanChoice == 'scissors') {
+                    computerScore += 1;
+                    console.log("human " + humanScore + "computer " + computerScore)
+                    console.log("You Lose! Rock beats Scissors");
+                }
+            } else if (computerChoice == 'paper') {
+                if (humanChoice == 'rock') {
+                    computerScore += 1;
+                    console.log("human " + humanScore + "computer " + computerScore)
+                    console.log("You Lose! Paper beats Rock");
+                }
+                if (humanChoice == 'scissors') {
+                    humanScore += 1;
+                    console.log("human " + humanScore + "computer " + computerScore)
+                    console.log("You Won! Scissors beats Paper");
+                }
 
-        // const humanSelection = getHumanChoice();
-        // const computerSelection = getComputerChoice();
+            } else if (computerChoice == 'scissors') {
+                if (humanChoice == 'rock') {
+                    humanScore += 1;
+                    console.log("human " + humanScore + "computer " + computerScore)
+                    console.log("You Won! Rock beats Scissors");
+                }
+                if (humanChoice == 'paper') {
+                    computerScore += 1;
+                    console.log("human " + humanScore + "computer " + computerScore)
+                    console.log("You Lose! Scissors beats Paper");
+                }
+            }
+        }
 
-        // playRound(humanSelection, computerSelection);
-        getComputerChoice()
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+
+        playRound(humanSelection, computerSelection);
+
     </script>
 
 </body>
