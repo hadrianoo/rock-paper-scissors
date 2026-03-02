@@ -7,7 +7,39 @@
 </head>
 
 <body>
+    <div id="choice">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+    </div>
+    <div id="score">
+        <div id="scoreboard"></div>
+    </div>
+
     <script>
+
+        let playerChoice = document.querySelector("#choice");
+        let score = document.querySelector("#score");
+        let scoreboard = document.querySelector("#scoreboard");
+
+        playerChoice.addEventListener('click', (event) => {
+            let target = event.target;
+            switch (target.id) {
+                case 'rock':
+                    console.log("rock");
+                    playRound('rock', getComputerChoice())
+                    break;
+                case 'paper':
+                    console.log("paper");
+                    playRound('paper', getComputerChoice())
+                    break;
+                case 'scissors':
+                    console.log("scissors");
+                    playRound('scissors', getComputerChoice())
+                    break;
+            }
+        });
+
         let humanScore = 0;
         let computerScore = 0;
 
@@ -23,27 +55,33 @@
             }
         }
 
-        function getHumanChoice() {
-            return prompt('rock, paper or scissors?').toLowerCase();
-        }
-
         function setUpperCase(text) {
             return text.charAt(0).toUpperCase() + text.slice(1);
         }
 
         function printWon(human, computer) {
-            console.log(`You Won! ${setUpperCase(human)} beats ${setUpperCase(computer)}`);
+            let para = document.createElement("p");
+            para.textContent = `You Won! ${setUpperCase(human)} beats ${setUpperCase(computer)}`;
+            score.appendChild(para);
         }
 
         function printLose(human, computer) {
-            console.log(`You Lose! ${setUpperCase(computer)} beats ${setUpperCase(human)}`);
+            let para = document.createElement("p");
+            para.textContent = `You Lose! ${setUpperCase(computer)} beats ${setUpperCase(human)}`;
+            score.appendChild(para);
+        }
+
+        function printDraw(choice) {
+            let para = document.createElement("p");
+            para.textContent = `Draw! You both choose ${setUpperCase(choice)}`;
+            score.appendChild(para);
         }
 
         function playRound(humanChoice, computerChoice) {
             if (humanChoice == computerChoice) {
                 humanScore += 1;
                 computerScore += 1;
-                console.log(`Draw! You both choose ${setUpperCase(humanChoice)}`)
+                printDraw(humanChoice);
             } else if (computerChoice == 'rock') {
                 if (humanChoice == 'paper') {
                     humanScore += 1;
@@ -72,22 +110,24 @@
                     printLose(humanChoice, computerChoice);
                 }
             }
-        }
-
-        function playGame() {
-            for (let i = 0; i < 5; i++) {
-                const humanSelection = getHumanChoice();
-                const computerSelection = getComputerChoice();
-                playRound(humanSelection, computerSelection);
-
+            scoreboard.textContent = `Score: You ${humanScore} : Computer ${computerScore}`;
+            if (humanScore >= 5 || computerScore >= 5) {
+                let para = document.createElement("p");
+                para.textContent = 'Game Over';
+                scoreboard.appendChild(para);
+                let paraStatus = document.createElement("p");
+                if (humanScore > computerScore) {
+                    paraStatus.textContent = `You Won!`;
+                } else if (humanScore < computerScore) {
+                    paraStatus.textContent = `You Lose!`;
+                } else {
+                    paraStatus.textContent = `Draw!`;
+                }
+                scoreboard.appendChild(paraStatus);
             }
-            console.log('Game Over')
-            console.log(humanScore > computerScore ? 'You Won! Score: ' : humanScore < computerScore ? 'You Lose! Score: ' : 'Draw! Score: ');
-            console.log(`${humanScore}:${computerScore}`);
         }
-        playGame();
-    </script>
 
+    </script>
 </body>
 
 </html>
